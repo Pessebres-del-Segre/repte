@@ -1,0 +1,116 @@
+<h2 mat-dialog-title>Accés al Repte del Pessebre</h2>
+<mat-dialog-content>
+  <mat-tab-group>
+    <mat-tab label="Iniciar sessió">
+      <form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()" class="form-container">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Correu electrònic</mat-label>
+          <input matInput formControlName="email" placeholder="exemple@correu.com" required>
+          <mat-error *ngIf="loginForm.get('email')?.hasError('required')">
+            El correu electrònic és obligatori
+          </mat-error>
+          <mat-error *ngIf="loginForm.get('email')?.hasError('email')">
+            Si us plau, introdueix un correu electrònic vàlid
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Contrasenya</mat-label>
+          <input matInput [type]="hideLoginPassword ? 'password' : 'text'" formControlName="password" required>
+          <button mat-icon-button matSuffix (click)="hideLoginPassword = !hideLoginPassword" type="button">
+            <mat-icon>{{hideLoginPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
+            La contrasenya és obligatòria
+          </mat-error>
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid" class="submit-button">
+          Iniciar sessió
+        </button>
+
+        <div class="separator">
+          <span>o</span>
+        </div>
+
+        <button mat-raised-button (click)="onGoogleLogin()" type="button" class="google-button">
+          <mat-icon>login</mat-icon>
+          Iniciar sessió amb Google
+        </button>
+      </form>
+    </mat-tab>
+
+    <mat-tab label="Registrar-se">
+      <form [formGroup]="signupForm" (ngSubmit)="onSignupSubmit()" class="form-container">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Nom d'usuari</mat-label>
+          <input matInput formControlName="username" required>
+          <mat-error *ngIf="signupForm.get('username')?.hasError('required')">
+            El nom d'usuari és obligatori
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Nom complet</mat-label>
+          <input matInput formControlName="name" required>
+          <mat-error *ngIf="signupForm.get('name')?.hasError('required')">
+            El nom complet és obligatori
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Correu electrònic</mat-label>
+          <input matInput formControlName="email" placeholder="exemple@correu.com" required>
+          <mat-error *ngIf="signupForm.get('email')?.hasError('required')">
+            El correu electrònic és obligatori
+          </mat-error>
+          <mat-error *ngIf="signupForm.get('email')?.hasError('email')">
+            Si us plau, introdueix un correu electrònic vàlid
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Contrasenya</mat-label>
+          <input matInput [type]="hideSignupPassword ? 'password' : 'text'" formControlName="password" required>
+          <button mat-icon-button matSuffix (click)="hideSignupPassword = !hideSignupPassword" type="button">
+            <mat-icon>{{hideSignupPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          <mat-error *ngIf="signupForm.get('password')?.hasError('required')">
+            La contrasenya és obligatòria
+          </mat-error>
+          <mat-error *ngIf="signupForm.get('password')?.hasError('minlength')">
+            La contrasenya ha de tenir almenys 6 caràcters
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Confirmar contrasenya</mat-label>
+          <input matInput [type]="hideSignupConfirmPassword ? 'password' : 'text'" formControlName="confirmPassword" required>
+          <button mat-icon-button matSuffix (click)="hideSignupConfirmPassword = !hideSignupConfirmPassword" type="button">
+            <mat-icon>{{hideSignupConfirmPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          <mat-error *ngIf="signupForm.get('confirmPassword')?.hasError('required')">
+            La confirmació de la contrasenya és obligatòria
+          </mat-error>
+          <mat-error *ngIf="signupForm.get('confirmPassword')?.hasError('passwordMismatch')">
+            Les contrasenyes no coincideixen
+          </mat-error>
+        </mat-form-field>
+
+        <mat-checkbox formControlName="acceptTerms" required>
+          Accepto els termes i condicions
+        </mat-checkbox>
+        <mat-error *ngIf="signupForm.get('acceptTerms')?.hasError('required') && signupForm.get('acceptTerms')?.touched">
+          Has d'acceptar els termes i condicions per continuar
+        </mat-error>
+
+        <button mat-raised-button color="primary" type="submit" [disabled]="signupForm.invalid" class="submit-button">
+          Registrar-se
+        </button>
+      </form>
+    </mat-tab>
+  </mat-tab-group>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancel·lar</button>
+</mat-dialog-actions>

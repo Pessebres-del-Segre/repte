@@ -1,0 +1,13 @@
+<div class="container" *ngIf="store">
+  <div class="company-info">
+    <h1 class="company-name">{{ store.name }}</h1>
+    <p class="company-description">{{ store.description }}</p>
+  </div>
+  <div class="action-container">
+    <button class="btn" (click)="unlockQR()">Desbloqueja QR</button>
+  </div>
+</div>
+
+<div class="container" *ngIf="!store">
+  <p>Carregant informació de l'empresa...</p>
+</div>

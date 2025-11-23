@@ -1,0 +1,26 @@
+import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
+import { LoginDialogComponent } from '../account/login-dialog/login-dialog.component';
+
+@Component({
+  selector: 'app-home',
+  standalone: true,
+  imports: [MatDialogModule],
+  templateUrl: './home.component.html',
+  styleUrl: './home.component.css'
+})
+export class HomeComponent {
+  constructor(private dialog: MatDialog) {}
+
+  openLoginDialog(): void {
+    const dialogRef = this.dialog.open(LoginDialogComponent, {
+      width: '500px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed', result);
+      // Handle login/signup result here
+    });
+  }
+}

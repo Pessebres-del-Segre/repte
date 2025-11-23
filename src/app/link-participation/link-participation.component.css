@@ -1,0 +1,45 @@
+.container {
+  max-width: 800px;
+  margin: 50px auto;
+  padding: var(--spacing-xl);
+  background-color: white;
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--box-shadow-md);
+  text-align: center;
+}
+
+.company-info {
+  margin-bottom: var(--spacing-xl);
+}
+
+.company-name {
+  font-size: 2.5rem;
+  color: var(--dark-text);
+  margin-bottom: var(--spacing-md);
+}
+
+.company-description {
+  font-size: 1.2rem;
+  color: var(--medium-text);
+  margin-bottom: var(--spacing-xl);
+  line-height: 1.6;
+}
+
+.action-container {
+  margin-top: var(--spacing-xl);
+}
+
+@media (max-width: 768px) {
+  .container {
+    margin: 20px;
+    padding: var(--spacing-lg);
+  }
+
+  .company-name {
+    font-size: 2rem;
+  }
+
+  .company-description {
+    font-size: 1rem;
+  }
+}

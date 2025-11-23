@@ -1,0 +1,32 @@
+<div class="container">
+  <div class="book-header">
+    <h1>El Pessebre d'Artesa de Segre</h1>
+    <a routerLink="/dashboard" class="btn btn-secondary">Tornar al Tauler</a>
+  </div>
+
+  <div class="book-content flex-container">
+    <div class="content-main card">
+      <div *ngIf="currentFragment" class="current-fragment">
+        <h2>{{ currentFragment.title }}</h2>
+
+        <div *ngIf="currentFragment.image_url" class="fragment-image">
+          <img [src]="currentFragment.image_url" alt="{{ currentFragment.title }}" class="img-fluid">
+        </div>
+
+        <div class="fragment-text">
+          <p>{{ currentFragment.text }}</p>
+        </div>
+
+        <div class="navigation-controls">
+          <button *ngIf="currentFragmentIndex !== 0" (click)="previousFragment()" class="btn">Anterior</button>
+          <span *ngIf="currentFragment !== syntheticFragment" class="page-indicator text-muted">{{ currentFragmentIndex + 1 }} / {{ fragments.length }}</span>
+          <button *ngIf="canNavigateNext()" (click)="nextFragment()" class="btn">Següent</button>
+        </div>
+      </div>
+
+      <div *ngIf="!currentFragment" class="text-center text-muted">
+        <p>No hi ha fragments de la història disponibles. Visita les botigues per desbloquejar la història!</p>
+      </div>
+    </div>
+  </div>
+</div>

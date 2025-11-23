@@ -1,0 +1,57 @@
+.form-container {
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0;
+}
+
+.full-width {
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.submit-button {
+  margin-top: 20px;
+}
+
+.separator {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 20px 0;
+}
+
+.separator::before,
+.separator::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #ccc;
+}
+
+.separator span {
+  padding: 0 10px;
+  color: #666;
+}
+
+.google-button {
+  background-color: #fff;
+  color: #757575;
+  border: 1px solid #ddd;
+}
+
+.google-button mat-icon {
+  margin-right: 8px;
+}
+
+mat-dialog-content {
+  min-width: 350px;
+  max-width: 500px;
+  max-height: 80vh;
+}
+
+mat-tab-group {
+  margin-top: 15px;
+}
+
+mat-checkbox {
+  margin-bottom: 20px;
+}

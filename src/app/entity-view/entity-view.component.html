@@ -1,0 +1,33 @@
+<div class="container">
+  <div class="header-container">
+    <h1>Totes les Botigues</h1>
+    <button class="btn btn-secondary" routerLink="/dashboard">Tornar al Tauler</button>
+  </div>
+
+  <div *ngIf="loading" class="loading-container">
+    <p>Carregant botigues...</p>
+  </div>
+
+  <div *ngIf="error" class="error-container">
+    <p>Hi ha hagut un error carregant les botigues. Si us plau, torna-ho a provar més tard.</p>
+    <button class="btn btn-primary" (click)="loadEntities()">Tornar a provar</button>
+  </div>
+
+  <div *ngIf="!loading && !error" class="entities-list">
+    <div *ngIf="entities.length === 0" class="no-entities">
+      <p>No s'han trobat botigues.</p>
+    </div>
+
+    <div *ngFor="let entity of entities" class="entity-card">
+      <div class="entity-status">
+        <span *ngIf="entity.scanned" class="status-scanned">✓</span>
+        <span *ngIf="!entity.scanned" class="status-not-scanned">❌</span>
+      </div>
+      <div class="entity-info">
+        <h3>{{ entity.name_entity }}</h3>
+        <p *ngIf="entity.scanned">Estat: Escanejada</p>
+        <p *ngIf="!entity.scanned">Estat: No escanejada</p>
+      </div>
+    </div>
+  </div>
+</div>

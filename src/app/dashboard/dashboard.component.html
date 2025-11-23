@@ -1,0 +1,28 @@
+<div class="container-sm">
+  <div class="header-container">
+    <h1>Tauler del Repte</h1>
+    <button class="btn btn-danger logout-btn" (click)="logout()">Tancar sessió</button>
+  </div>
+
+  <div class="section">
+    <h2>El teu progrés</h2>
+
+    <div class="card">
+      <h3>Botigues Desbloquejades</h3>
+      <div class="progress-container">
+        <div class="progress-bar" [style.width.%]="storePercentage"></div>
+      </div>
+      <p>{{ progress.storesUnlocked }} / {{ progress.totalStores }} ({{ storePercentage | number:'1.0-0' }}%)</p>
+      <button class="btn btn-primary" routerLink="/all-stores">Mira totes les botigues</button>
+    </div>
+
+    <div class="card">
+      <h3>Fragments de la Història Desbloquejats</h3>
+      <div class="progress-container">
+        <div class="progress-bar" [style.width.%]="fragmentPercentage"></div>
+      </div>
+      <p>{{ progress.fragmentsUnlocked }} / {{ progress.totalFragments }} ({{ fragmentPercentage | number:'1.0-0' }}%)</p>
+    </div>
+  </div>
+
+</div>
