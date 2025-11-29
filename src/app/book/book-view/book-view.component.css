@@ -88,11 +88,34 @@
   text-align: center;
 }
 
-.fragment-image img {
+.fragment-image img.thumbnail {
   max-width: 100%;
   max-height: 400px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  cursor: zoom-in;
+}
+
+/* Zoom overlay styles */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.zoomed {
+  max-width: 95vw;
+  max-height: 95vh;
+  object-fit: contain;
+  cursor: zoom-out;
+  touch-action: pinch-zoom; /* supports touch zoom */
 }
 
 .fragment-text {

@@ -4,13 +4,13 @@
     <mat-tab label="Iniciar sessió">
       <form [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()" class="form-container">
         <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Correu electrònic</mat-label>
+          <mat-label>Nom d'usuari</mat-label>
           <input matInput formControlName="email" placeholder="exemple@correu.com" required>
           <mat-error *ngIf="loginForm.get('email')?.hasError('required')">
-            El correu electrònic és obligatori
+            El nom d'usuarri és obligatori
           </mat-error>
           <mat-error *ngIf="loginForm.get('email')?.hasError('email')">
-            Si us plau, introdueix un correu electrònic vàlid
+            Si us plau, introdueix un nom d'usuari vàlid
           </mat-error>
         </mat-form-field>
 
@@ -28,6 +28,13 @@
         <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid" class="submit-button">
           Iniciar sessió
         </button>
+
+        <mat-error *ngIf="loginForm.hasError('invalidCredentials')" class="form-error">
+          Credencials incorrectes
+        </mat-error>
+        <mat-error *ngIf="loginForm.hasError('serverError')" class="form-error">
+          Error del servidor. Si us plau, torna-ho a provar més tard.
+        </mat-error>
 
         <div class="separator">
           <span>o</span>
@@ -85,8 +92,10 @@
 
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Confirmar contrasenya</mat-label>
-          <input matInput [type]="hideSignupConfirmPassword ? 'password' : 'text'" formControlName="confirmPassword" required>
-          <button mat-icon-button matSuffix (click)="hideSignupConfirmPassword = !hideSignupConfirmPassword" type="button">
+          <input matInput [type]="hideSignupConfirmPassword ? 'password' : 'text'" formControlName="confirmPassword"
+            required>
+          <button mat-icon-button matSuffix (click)="hideSignupConfirmPassword = !hideSignupConfirmPassword"
+            type="button">
             <mat-icon>{{hideSignupConfirmPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
           </button>
           <mat-error *ngIf="signupForm.get('confirmPassword')?.hasError('required')">
@@ -100,13 +109,21 @@
         <mat-checkbox formControlName="acceptTerms" required>
           Accepto els termes i condicions
         </mat-checkbox>
-        <mat-error *ngIf="signupForm.get('acceptTerms')?.hasError('required') && signupForm.get('acceptTerms')?.touched">
+        <mat-error
+          *ngIf="signupForm.get('acceptTerms')?.hasError('required') && signupForm.get('acceptTerms')?.touched">
           Has d'acceptar els termes i condicions per continuar
         </mat-error>
 
         <button mat-raised-button color="primary" type="submit" [disabled]="signupForm.invalid" class="submit-button">
           Registrar-se
         </button>
+
+        <mat-error *ngIf="signupForm.hasError('userExists')" class="form-error">
+          L'usuari o el correu electrònic ja existeixen
+        </mat-error>
+        <mat-error *ngIf="signupForm.hasError('signupFailed')" class="form-error">
+          Error en el registre. Si us plau, torna-ho a provar més tard.
+        </mat-error>
       </form>
     </mat-tab>
   </mat-tab-group>

@@ -5,7 +5,7 @@ import { CanActivate, Router } from '@angular/router';
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
-  constructor(private router: Router) {}
+  constructor(private router: Router) { }
 
   canActivate(): boolean {
     // Aquí hauries de comprovar l'estat d'autenticació real
@@ -35,11 +35,11 @@ export class AuthGuard implements CanActivate {
   providedIn: 'root'
 })
 export class RedirectIfAuthenticatedGuard implements CanActivate {
-  constructor(private router: Router) {}
+  constructor(private router: Router) { }
 
   canActivate(): boolean {
     const isLoggedIn = this.isUserLoggedIn();
-
+    console.log('isLoggedIn', isLoggedIn);
     if (isLoggedIn) {
       this.router.navigate(['/dashboard']);
       return false;
@@ -50,6 +50,6 @@ export class RedirectIfAuthenticatedGuard implements CanActivate {
 
   private isUserLoggedIn(): boolean {
     // La mateixa lògica que l'AuthGuard
-    return !!localStorage.getItem('authToken');
+    return !!localStorage.getItem('access_token');
   }
 }

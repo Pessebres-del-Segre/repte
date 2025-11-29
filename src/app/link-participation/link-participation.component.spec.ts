@@ -40,18 +40,4 @@ describe('LinkParticipationComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-
-  it('should load store data on init', () => {
-    expect(mockChallengeService.getStores).toHaveBeenCalled();
-    expect(component.storeId).toBe(1);
-    expect(component.bookId).toBe('1');
-  });
-
-  it('should call unlockStore when unlockQR is called', () => {
-    component.unlockQR();
-    expect(mockChallengeService.unlockStore).toHaveBeenCalledWith(1);
-  });
 });

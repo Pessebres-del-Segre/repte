@@ -36,6 +36,7 @@ export class SignComponent implements OnInit {
         localStorage.setItem('is_new_user', isNewUser);
       }
       console.log('Sign in successful!');
+      console.log('Next:', next);
       // Redirect to dashboard
       this.router.navigate([next]);
     });

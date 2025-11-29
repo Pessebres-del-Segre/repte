@@ -18,6 +18,7 @@ export class BookViewComponent implements OnInit {
   currentFragment: Fragment | undefined;
   totalFragmentsInStory: number = 0;
   discoveredFragments: number = 0;
+  zoomSrc: string | null = null;
   syntheticFragment: Fragment = {
     id: -1,
     title: "Vols descobrir com acaba la història?",
@@ -128,5 +129,14 @@ export class BookViewComponent implements OnInit {
     // Otherwise, we can navigate if there's a next fragment or if we're at the last available fragment but not all fragments are discovered
     return this.currentFragmentIndex < this.fragments.length - 1 ||
            (this.currentFragmentIndex === this.fragments.length - 1 && this.discoveredFragments < this.totalFragmentsInStory);
+  }
+
+  // Image zoom functionality
+  openZoom(src: string): void {
+    this.zoomSrc = src;
+  }
+
+  closeZoom(): void {
+    this.zoomSrc = null;
   }
 }

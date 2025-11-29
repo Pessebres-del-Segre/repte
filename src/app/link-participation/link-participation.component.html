@@ -1,13 +1,22 @@
-<div class="container" *ngIf="store">
-  <div class="company-info">
+<div class="container"  *ngIf="store">
+  <div class="header-container">
     <h1 class="company-name">{{ store.name }}</h1>
+    <button class="btn btn-secondary" routerLink="/dashboard">Tornar al Tauler</button>
+  </div>
+
+  <div class="company-info">
     <p class="company-description">{{ store.description }}</p>
   </div>
-  <div class="action-container">
+  <div class="action-container"  *ngIf="storeCollaboration">
+    <button class="btn" *ngIf="!storeCollaboration.is_scanned" (click)="unlockQR()">Desbloqueja QR</button>
+    <p *ngIf="storeCollaboration.is_scanned">QR ja descobert!</p>
+  </div>
+  <div class="qr-container" *ngIf="!storeCollaboration">
     <button class="btn" (click)="unlockQR()">Desbloqueja QR</button>
+
   </div>
 </div>
 
 <div class="container" *ngIf="!store">
-  <p>Carregant informació de l'empresa...</p>
+  <p>Alguna cosa no ha anat bé! Comunica-ho a l'administració.</p>
 </div>

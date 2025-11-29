@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map, tap } from 'rxjs/operators';
-import { Store } from '../models/store.model';
-import { Fragment } from '../models/fragment.model';
-import { environment } from '../../environments/environment';
+import {Injectable} from '@angular/core';
+import {BehaviorSubject, Observable, of} from 'rxjs';
+import {HttpClient} from '@angular/common/http';
+import {catchError, map} from 'rxjs/operators';
+import {Store, StoreScanCollaboration} from '../models/store.model';
+import {Fragment} from '../models/fragment.model';
+import {environment} from '../../environments/environment';
 
 interface ProgressResponse {
   scans_count: number;
@@ -35,17 +35,16 @@ interface FragmentsResponse {
 export class ChallengeService {
   private apiUrl = environment.apiUrl;
   // Mock data for stores
-  private stores: Store[] = [
-  ];
+  private stores: Store[] = [];
 
   // Mock data for fragments
-  private fragments: Fragment[] = [
-  ];
+  private fragments: Fragment[] = [];
 
   private storesSubject = new BehaviorSubject<Store[]>(this.stores);
   private fragmentsSubject = new BehaviorSubject<Fragment[]>(this.fragments);
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
   // Get progress data from API
   getProgressFromApi(userId: number = 1): Observable<ProgressResponse> {
@@ -71,8 +70,14 @@ export class ChallengeService {
   }
 
   // Get all stores
-  getStores(): Observable<Store[]> {
-    return this.storesSubject.asObservable();
+  getStoreCollaborationScan(storeId: string, contestId: number = 1): Observable<StoreScanCollaboration> {
+    const accessToken = localStorage.getItem('access_token');
+    return this.http.get<StoreScanCollaboration>(`${this.apiUrl}/collaboration/${contestId}/${storeId}/`,
+      {
+        headers: {
+          'Authorization': `Bearer ${accessToken}`
+        }
+      })
   }
 
   // Get all fragments
@@ -88,16 +93,38 @@ export class ChallengeService {
 
 
   // Unlock a store by ID
-  unlockStore(storeId: number): void {
-
+  unlockStore(storeId: string, contestId: number = 1): Observable<any> {
+    const accessToken = localStorage.getItem('access_token');
+    return this.http.post<any>(`${this.apiUrl}/link/`,
+      {
+        contest_id: contestId,
+        entity_uuid: storeId
+      },
+      {
+        headers: {
+          'Authorization': `Bearer ${accessToken}`
+        }
+      }).pipe(
+      catchError(error => {
+        console.error('Error unlocking store:', error);
+        return of({ error: error.error });
+      })
+    );
   }
 
   // Get challenge progress
-  getChallengeProgress(challengeId: number = 1): Observable<{ storesUnlocked: number, totalStores: number, fragmentsUnlocked: number, totalFragments: number }> {
+  getChallengeProgress(challengeId: number = 1): Observable<{
+    storesUnlocked: number,
+    totalStores: number,
+    fragmentsUnlocked: number,
+    totalFragments: number,
+    missingFinalScans: number
+  }> {
     return this.getProgressFromApi(challengeId).pipe(
       map(response => ({
         storesUnlocked: response.scans_count,
         totalStores: response.collaborations_count,
+        missingFinalScans: response.missing_final_scans,
         fragmentsUnlocked: response.discovered_fragments,
         totalFragments: response.len_fragments
       }))
@@ -134,7 +161,6 @@ export class ChallengeService {
       }).pipe(
       catchError(error => {
         console.error('Error fetching story fragments:', error);
-        // Return a default response in case of error
         return of({
           fragments: [],
           discovered_fragments: 0,

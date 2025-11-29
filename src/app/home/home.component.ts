@@ -11,11 +11,12 @@ import { LoginDialogComponent } from '../account/login-dialog/login-dialog.compo
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialog: MatDialog) { }
 
   openLoginDialog(): void {
     const dialogRef = this.dialog.open(LoginDialogComponent, {
-      width: '500px'
+      width: '500px',
+      data: { returnUrl: '/dashboard', mustLink: true }
     });
 
     dialogRef.afterClosed().subscribe(result => {
