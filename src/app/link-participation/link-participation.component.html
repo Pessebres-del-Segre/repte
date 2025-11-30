@@ -9,7 +9,7 @@
   </div>
   <div class="action-container"  *ngIf="storeCollaboration">
     <button class="btn" *ngIf="!storeCollaboration.is_scanned" (click)="unlockQR()">Desbloqueja QR</button>
-    <p *ngIf="storeCollaboration.is_scanned">QR ja descobert!</p>
+    <p *ngIf="storeCollaboration.is_scanned">QR ja descobert! Redireccionant al taulell...</p>
   </div>
   <div class="qr-container" *ngIf="!storeCollaboration">
     <button class="btn" (click)="unlockQR()">Desbloqueja QR</button>
@@ -18,5 +18,7 @@
 </div>
 
 <div class="container" *ngIf="!store">
-  <p>Alguna cosa no ha anat bé! Comunica-ho a l'administració.</p>
+  <p>Alguna cosa no ha anat bé! No s'ha trobat el QR. Comunica-ho a l'administració.</p>
 </div>
+
+<app-tutorial></app-tutorial>

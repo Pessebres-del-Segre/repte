@@ -1,17 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { CommonModule } from '@angular/common';
-import { ChallengeService } from '../services/challenge.service';
-import { Store, StoreScanCollaboration } from '../models/store.model';
-import { MatDialog } from '@angular/material/dialog';
-import { MatDialogModule } from '@angular/material/dialog';
-import { LoginDialogComponent } from '../account/login-dialog/login-dialog.component';
-import { StoreService } from '../services/store.service';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router, RouterLink} from '@angular/router';
+import {CommonModule} from '@angular/common';
+import {ChallengeService} from '../services/challenge.service';
+import {Store, StoreScanCollaboration} from '../models/store.model';
+import {MatDialog, MatDialogModule} from '@angular/material/dialog';
+import {LoginDialogComponent} from '../account/login-dialog/login-dialog.component';
+import {StoreService} from '../services/store.service';
+import {TutorialComponent} from '../tutorial/tutorial.component';
 
 @Component({
   selector: 'app-link-participation',
   standalone: true,
-  imports: [CommonModule, RouterLink, MatDialogModule],
+  imports: [CommonModule, RouterLink, MatDialogModule, TutorialComponent],
   templateUrl: './link-participation.component.html',
   styleUrl: './link-participation.component.css'
 })
@@ -28,7 +28,8 @@ export class LinkParticipationComponent implements OnInit {
     private challengeService: ChallengeService,
     private storeService: StoreService,
     private dialog: MatDialog
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.bookId = this.route.snapshot.paramMap.get('book_id');
@@ -46,8 +47,15 @@ export class LinkParticipationComponent implements OnInit {
       })
       this.challengeService.getStoreCollaborationScan(this.storeId).subscribe(store => {
         this.storeCollaboration = store;
+        if (this.storeCollaboration?.is_scanned) {
+          /* Sleep 2 segonds */
+          setTimeout(() => {
+            this.router.navigate(['/dashboard']);
+          }, 1000)
+        }
       });
     }
+
   }
 
   unlockQR(): void {
@@ -59,7 +67,7 @@ export class LinkParticipationComponent implements OnInit {
       const currentUrl = `/link/${this.bookId}/${this.storeId}`;
       const dialogRef = this.dialog.open(LoginDialogComponent, {
         width: '500px',
-        data: { returnUrl: currentUrl, mustLink: true }
+        data: {returnUrl: currentUrl, mustLink: true}
       });
 
       dialogRef.afterClosed().subscribe(result => {

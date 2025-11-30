@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatDialogModule } from '@angular/material/dialog';
 import { LoginDialogComponent } from '../account/login-dialog/login-dialog.component';
+import {TutorialComponent} from '../tutorial/tutorial.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [MatDialogModule],
+  imports: [MatDialogModule, TutorialComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
