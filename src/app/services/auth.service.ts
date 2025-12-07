@@ -7,7 +7,7 @@ import { environment } from '../../environments/environment';
     providedIn: 'root'
 })
 export class AuthService {
-    private apiUrl = environment.apiUrl || 'http://localhost:8000'; // Fallback for dev
+    private apiUrl = environment.apiUrl; // Fallback for dev
 
     constructor(private http: HttpClient) { }
 
