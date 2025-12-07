@@ -10,6 +10,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'app-login-dialog',
@@ -35,6 +36,8 @@ export class LoginDialogComponent implements OnInit {
   hideLoginPassword = true;
   hideSignupPassword = true;
   hideSignupConfirmPassword = true;
+  private authUrl = environment.authUrl;
+
 
   constructor(
     private fb: FormBuilder,
@@ -137,7 +140,7 @@ export class LoginDialogComponent implements OnInit {
   onGoogleLogin(): void {
     // Handle Google login logic here
     const returnUrl = this.data?.returnUrl || '/dashboard';
-    window.location.href = `http://localhost:8000/auth/google/login/?process=login&next=${encodeURIComponent(returnUrl)}`;
+    window.location.href = `${this.authUrl}/google/login/?process=login&next=${encodeURIComponent(returnUrl)}`;
   }
 
   onCancel(): void {
